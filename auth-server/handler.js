@@ -82,13 +82,15 @@ module.exports.getAccessToken = async (event) => {
     });
 };
 
-module.exports.getCalendarEvents = event => {
+module.exports.getCalendarEvents = async event => {
   const oAuth2CLient = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+  const access_token = event.pathParameters
+    ? decodeURIComponent(`${event.pathParameters.access_token}`)
+    : "";
     
 
   oAuth2Client.setCredentials({ access_token });
