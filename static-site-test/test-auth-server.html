@@ -31,13 +31,13 @@
       <button id="getToken">Get Token</button>
       <p id="accessToken"></p>
     </main>
-    <script type="text/javascript">
+    <script>
       // --------------------- STEP 1
       const getURLElement = document.getElementById("getURL");
       const resultElement = document.getElementById("result");
       const resultLink = document.getElementById("authURL");
       // Replace this with your own endpoint
-      const getAuthURL = `https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url`;
+      const getAuthURL = 'https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/get-auth-url';
 
       getURLElement.onclick = function () {
         fetch(getAuthURL)
@@ -60,9 +60,10 @@
       const getAccessToken = document.getElementById("getToken");
       const accessTokenElement = document.getElementById("accessToken");
       const getToken =
-        "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token/{code}";
+      "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token";
 
       getAccessToken.onclick = function () {
+        console.log("reached AccessToken");
         let code = codeValue.value;
 
         // if the authorization code is not URL-encoded, then URL-encode it.
