@@ -1,24 +1,14 @@
 import { mockData } from "./mock-data";
-import { axios } from 'axios';
-import NProgress from 'nprogress';
+import axios from "axios";
+import NProgress from "nprogress";
 
-
-
-/**
- *
- * @param {*} events:
- * The following function should be in the “api.js” file.
- * This function takes an events array, then uses map to create a new array with only locations.
- * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
- * The Set will remove all duplicates from the array.
- */
 export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
   var locations = [...new Set(extractLocations)];
   return locations;
 };
 
-const checkToken = async (accessToken) => {
+export const checkToken = async (accessToken) => {
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   )
@@ -29,20 +19,21 @@ const checkToken = async (accessToken) => {
 };
 
 const getToken = async (code) => {
-  try {
-      const encodeCode = encodeURIComponent(code);
+  const encodeCode = encodeURIComponent(code);
+  const { access_token } = await fetch(
+    "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token" +
+      "/" +
+      encodeCode
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((error) => error);
 
-      const response = await fetch( "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token" + '/' + encodeCode);
-      if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const { access_token } = await response.json();
-      access_token && localStorage.setItem("access_token", access_token);
-      return access_token;
-  } catch(error) {
-      error.json();
-  }
-}
+  access_token && localStorage.setItem("access_token", access_token);
+
+  return access_token;
+};
 
 const removeQuery = () => {
   if (window.history.pushState && window.location.pathname) {
@@ -66,12 +57,22 @@ export const getEvents = async () => {
     return mockData;
   }
 
+  if (!navigator.onLine) {
+    const data = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return data ? JSON.parse(data).events : [];
+  }
+
+  
 
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
-    const url = "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token" + '/' + token;
+    const url =
+    "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/token" +
+      "/" +
+      token;
     const result = await axios.get(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
