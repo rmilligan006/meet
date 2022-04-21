@@ -5,11 +5,20 @@ class NumberOfEvents extends Component {
     numberOfEvents: 32,
   };
 
-  handleInputChange = (event) => {
+  handleInputChanged = (event) => {
     const value = event.target.value;
-    this.setState({
-      numberOfEvents: value,
-    });
+    if (value <= 0 || value > 32) {
+      this.setState({
+        numberOfEvents: "",
+        infoText:"Please enter a number from 1 to 32"
+      });
+    } else {
+      this.setState({
+        numberOfEvents: value,
+        infoText:""
+      });
+    }
+    this.props.updateNumberofEvents(value);
   };
 
   render() {

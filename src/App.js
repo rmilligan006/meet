@@ -33,14 +33,19 @@ class App extends Component {
     this.updateEvents(this.state.locations, numberOfEvents);
   }
 
-  updateEvents = (location) => {
+  updateEvents = (location, eventCount) => {
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
+      const locationEvents = 
+      (location === 'all') ?
         events :
         events.filter((event) => event.location === location);
-      this.setState({
-        events: locationEvents
-      });
+      if (this.mounted) {
+        this.setState({
+          events: locationEvents.slice(0, this.state.numberOfEvents),
+          currentLocation: location,
+          numberOfEvents: eventCount,
+        });
+      }
     });
   }
 
@@ -52,7 +57,7 @@ class App extends Component {
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
         <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateNumberOfEvents={this.updateNumberOfEvents} />
-        <EventList events={this.state.events} />
+        <EventList events={this.state.events} numberOfEvents={this.state.NumberOfEvents} />
       </div>
     );
   }

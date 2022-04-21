@@ -63,14 +63,12 @@ export const getEvents = async () => {
     return data ? JSON.parse(data).events : [];
   }
 
-  
-
   const token = await getAccessToken();
 
   if (token) {
     removeQuery();
     const url =
-    "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/get-events" +
+      "https://71v6k5oo04.execute-api.us-east-1.amazonaws.com/dev/api/get-events" +
       "/" +
       token;
     const result = await axios.get(url);
