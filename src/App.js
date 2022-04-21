@@ -25,6 +25,14 @@ class App extends Component {
     this.mounted = false;
   }
 
+  updateNumberOfEvents = (numberOfEvents) => {
+    this.setState({
+      numberOfEvents,
+    });
+
+    this.updateEvents(this.state.locations, numberOfEvents);
+  }
+
   updateEvents = (location) => {
     getEvents().then((events) => {
       const locationEvents = (location === 'all') ?
