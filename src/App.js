@@ -11,7 +11,18 @@ import "./nprogress.css"
 class App extends Component {
   state = {
     events: [],
-    locations: []
+    locations: [],
+    NumberOfEvents: 32,
+  }
+
+  componentDidMount() {
+    getEvents().then((events) => {
+      this.setState({ events, locations: extractLocations(events) });
+    });
+  }
+
+  componentWillUnmount(){
+    this.mounted = false;
   }
 
   updateEvents = (location) => {
@@ -25,22 +36,14 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
-    getEvents().then((events) => {
-      this.setState({ events, locations: extractLocations(events) });
-    });
-  }
 
-  componentWillUnmount(){
-    this.mounted = false;
-  }
 
 
   render() {
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents />
+        <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateNumberOfEvents={this.updateNumberOfEvents} />
         <EventList events={this.state.events} />
       </div>
     );
