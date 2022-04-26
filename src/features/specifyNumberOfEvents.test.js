@@ -51,7 +51,7 @@ defineFeature(feature, (test) => {
       NumberOfEventsWrapper.find(".number-of-events").simulate("change", {
         target: { value: 1 },
       });
-      expect(AppWrapper.state(".number-of-events")).toEqual(1);
+      expect(AppWrapper.state("numberOfEvents")).toEqual(1);
     });
   });
 });
