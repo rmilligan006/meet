@@ -84,10 +84,18 @@ input[type="number"] {
 
 .EventList {
   display: grid;
+  padding-right: 1.5em;
   gap: 1rem;
-  margin: 4rem;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  margin: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
 border-top:1px solid #eab711;
+}
+
+@media only screen and (max-width: 768px) {
+  .EventList {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 
