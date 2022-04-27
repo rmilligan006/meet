@@ -15,7 +15,7 @@ class App extends Component {
     locations: [],
     NumberOfEvents: 32,
     currentLocation: "all",
-    warningText: "",
+    infoText: "",
   };
 
   componentDidMount() {
