@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap');
 .App {
   text-align: center;
-  padding: 2% 5%;
+  padding: 0% 5%;
 }
 
 .App * {
@@ -30,8 +30,9 @@ p {
 
 input[type="text"],
 input[type="number"] {
-  padding: 8px 6px 8px 10px;
+  padding: 10px 10px 10px 10px;
   border-radius: 10px;
+  margin-top: 25px;
   outline: none;
   border: 1px solid #ccc;
   font-size: 14px;
@@ -61,7 +62,7 @@ input[type="number"] {
   z-index: 2;
   align-self: center;
   margin: 0;
-  top: 43px;
+  top: 85px;
   font-size: 16px;
   box-shadow: 10px 10px 16px -3px rgba(0, 0, 0, 0.75);
 }
@@ -163,10 +164,6 @@ border-top:1px solid #eab711;
   font-family: sans-serif;
 }
 
-.Alert {
-  position: fixed;
-  top: 20px;
-}
 
 .data-vis-wrapper {
   display: flex;
