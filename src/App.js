@@ -6,7 +6,7 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { extractLocations, getEvents } from "./api";
-
+import { WarningAlert } from "./Alert";
 import "./nprogress.css";
 
 class App extends Component {
@@ -15,6 +15,7 @@ class App extends Component {
     locations: [],
     NumberOfEvents: 32,
     currentLocation: "all",
+    warningText: "",
   };
 
   componentDidMount() {
@@ -42,6 +43,7 @@ class App extends Component {
         this.setState({
           events: filteredEvents,
           currentLocation: location,
+          infoText: "",
         });
       });
     } else {
@@ -54,6 +56,8 @@ class App extends Component {
         this.setState({
           events: filteredEvents,
           numberOfEvents: eventCount,
+          infoText:
+            "You are offline. The displayed event list may not be up to date! ",
         });
       });
     }
@@ -62,6 +66,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <WarningAlert id="warningAlert" text={this.state.infoText} />
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}
