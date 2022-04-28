@@ -1,5 +1,6 @@
 import React from "react";
 import "./WelcomeScreen.css";
+import welcomepage from "./welcomepage.png";
 
 function WelcomeScreen(props) {
   return props.showWelcomeScreen ? (
@@ -28,9 +29,13 @@ function WelcomeScreen(props) {
             <b>Sign in with google</b>
           </button>
         </div>
+        <div className="pic-container">
+          {" "}
+          <img className="pic" src={welcomepage} alt="welcome" />
+        </div>
       </div>
       <a
-        href="https://cpalmerbelcher.github.io/meet1/privacy.html"
+        href="https://github.com/rmilligan006/meet/privacy.html"
         rel="nofollow noopener"
       >
         Privacy policy
