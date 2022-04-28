@@ -15,7 +15,7 @@ class App extends Component {
     locations: [],
     NumberOfEvents: 32,
     currentLocation: "all",
-    warningText: "",
+    infoText: "",
   };
 
   componentDidMount() {
@@ -40,36 +40,18 @@ class App extends Component {
     this.mounted = false;
   }
 
-  updateEvents = (location, eventCount) => {
-    const { currentLocation, numberOfEvents } = this.state;
-    if (location) {
-      getEvents().then((events) => {
-        const locationEvents =
-          location === "all"
-            ? events
-            : events.filter((event) => event.location === location);
-        const filteredEvents = locationEvents.slice(0, numberOfEvents);
-        this.setState({
-          events: filteredEvents,
-          currentLocation: location,
-          infoText: "",
-        });
+  updateEvents = (location) => {
+    getEvents().then((events) => {
+      const locationEvents =
+        location === "all"
+          ? events
+          : events.filter((event) => event.location === location);
+      const shownEvents = locationEvents.slice(0, this.state.numberOfEvents);
+      this.setState({
+        events: shownEvents,
+        currentLocation: location,
       });
-    } else {
-      getEvents.apply().then((events) => {
-        const locationEvents =
-          currentLocation === "all"
-            ? events
-            : events.filter((event) => event.location === currentLocation);
-        const filteredEvents = locationEvents.slice(0, eventCount);
-        this.setState({
-          events: filteredEvents,
-          numberOfEvents: eventCount,
-          infoText:
-            "You are offline. The displayed event list may not be up to date! ",
-        });
-      });
-    }
+    });
   };
 
   render() {
