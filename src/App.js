@@ -15,7 +15,7 @@ class App extends Component {
     locations: [],
     NumberOfEvents: 32,
     currentLocation: "all",
-    infoText: "",
+    warningText: "",
   };
 
   componentDidMount() {
@@ -25,6 +25,15 @@ class App extends Component {
         locations: extractLocations(events),
       });
     });
+    if (!navigator.onLine) {
+      this.setState({
+        infoText: "You are not connected to the Internet",
+      });
+    } else {
+      this.setState({
+        infoText: "",
+      });
+    }
   }
 
   componentWillUnmount() {
