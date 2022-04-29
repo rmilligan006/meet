@@ -1,5 +1,3 @@
-// src/App.js
-
 import React, { Component } from "react";
 import {
   ScatterChart,
@@ -10,13 +8,16 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import "./App.css";
+
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import WelcomeScreen from "./WelcomeScreen";
-import { extractLocations, getAccessToken, getEvents, checkToken } from "./api";
-import { WarningAlert } from "./Alert";
+import { InfoAlert } from "./Alert";
+
+import { extractLocations, getEvents, checkToken, getAccessToken } from "./api";
+
+import "./App.css";
 import "./nprogress.css";
 
 class App extends Component {
@@ -109,44 +110,72 @@ class App extends Component {
   };
 
   render() {
+    const { numberOfEvents, locations, events, infoText, showWelcomeScreen } =
+      this.state;
+
     return (
       <div className="App">
-        <WarningAlert id="warningAlert" text={this.state.infoText} />
-        <CitySearch
-          locations={this.state.locations}
-          updateEvents={this.updateEvents}
-        />
-        <NumberOfEvents
-          numberOfEvents={this.state.NumberOfEvents}
-          updateEvents={this.updateEvents}
-        />
-        <h4>Events in each city</h4>
+        <h1>Let's Meet!</h1>
+        <div
+          id="offline-alert-wrapper"
+          style={infoText ? {} : { display: "none" }}
+        >
+          <InfoAlert text={infoText} />
+        </div>
 
-        <ResponsiveContainer height={400}>
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-            <CartesianGrid />
-            <XAxis type="category" dataKey="city" name="city" />
-            <YAxis
-              allowDecimals={false}
-              type="number"
-              dataKey="number"
-              name="number of events"
-            />
-            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-            <Scatter data={this.getData()} fill="#8884d8" />
-          </ScatterChart>
-        </ResponsiveContainer>
-        <EventList
-          events={this.state.events}
-          numberOfEvents={this.state.NumberOfEvents}
-        />
-        <WelcomeScreen
-          showWelcomeScreen={this.state.showWelcomeScreen}
-          getAccessToken={() => {
-            getAccessToken();
-          }}
-        />
-        {}
+        <div className="search-wrapper">
+          <h2>Search for developer events in your city.</h2>
+          <NumberOfEvents
+            numberOfEvents={numberOfEvents}
+            updateNumberOfEvents={this.updateNumberOfEvents}
+          />
+          <CitySearch locations={locations} updateEvents={this.updateEvents} />
+        </div>
+
+        <div className="data-vis">
+          <h3>Events in each city</h3>
+          <div className="data-vis-wrapper">
+            <ResponsiveContainer height={400}>
+              <ScatterChart
+                id="scatter-container"
+                margin={{
+                  top: 20,
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                }}
+              >
+                <CartesianGrid />
+                <XAxis type="category" dataKey="city" name="City" />
+                <YAxis
+                  type="number"
+                  dataKey="number"
+                  name="Number of events"
+                  allowDecimals={false}
+                />
+                <Tooltip
+                  cursor={{ strokeDasharray: "3 3" }}
+                  label={""}
+                  labelFormatter={() => ""}
+                />
+                <Scatter
+                  data={this.getData().slice(0, numberOfEvents)}
+                  fill="#f0a384"
+                />
+              </ScatterChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <EventList events={events.slice(0, numberOfEvents)} />
+        {navigator.onLine && (
+          <WelcomeScreen
+            showWelcomeScreen={showWelcomeScreen}
+            getAccessToken={() => {
+              getAccessToken();
+            }}
+          />
+        )}
       </div>
     );
   }
