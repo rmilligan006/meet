@@ -40,7 +40,7 @@ class App extends Component {
       !window.location.href.startsWith("http://localhost")
     ) {
       const accessToken = localStorage.getItem("access_token");
-      const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+      const isTokenValid = !(await checkToken(accessToken)).error;
       const searchParams = new URLSearchParams(window.location.search);
       const code = searchParams.get("code");
 
@@ -99,7 +99,7 @@ class App extends Component {
   getData = () => {
     const { locations, events } = this.state;
     // map locations and filter events by location to get length of resulting array
-    const data = locations.map((location) => {
+    return locations.map((location) => {
       const number = events.filter(
         (event) => event.location === location
       ).length;
@@ -107,7 +107,6 @@ class App extends Component {
       const city = location.split(", ").shift();
       return { city, number };
     });
-    return data;
   };
 
   render() {

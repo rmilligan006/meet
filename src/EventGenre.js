@@ -6,7 +6,14 @@ const EventGenre = ({ events }) => {
 
   useEffect(() => {
     const getData = () => {
-      const genres = ["React", "JavaScript", "Node", "jQuery", "AngularJS"];
+      const genres = [
+        "React",
+        "JavaScript",
+        "Node",
+        "jQuery",
+        "AngularJS",
+        "Angular",
+      ];
       const data = genres.map((genre) => {
         const value = events.filter(({ summary }) =>
           summary.includes(genre)
@@ -20,7 +27,14 @@ const EventGenre = ({ events }) => {
     setData(() => getData());
   }, [events]);
 
-  const COLORS = ["#3A3845", "#826F66", "#e186b7", "#f39099", "#f0a384"];
+  const COLORS = [
+    "#3A3845",
+    "#826F66",
+    "#e186b7",
+    "#f39099",
+    "#f0a384",
+    "#FF00C8",
+  ];
 
   return (
     <ResponsiveContainer height={400}>

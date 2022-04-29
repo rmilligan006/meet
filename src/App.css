@@ -33,7 +33,10 @@ ul {
 p {
   margin: 5px 0;
 }
-
+h1 {
+  color: #ccc;
+  text-shadow:#888 2px 2px 3px;
+}
 
 .display-none {
   display: none;
