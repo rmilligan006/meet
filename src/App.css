@@ -1,15 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+:root {
+  --font: 'Rubik', sans-serif;
+  --clr-primary: hsl(221, 70%, 65%);
+  --clr-primary-75: hsl(221, 70%, 75%);
+  --clr-primary-85: hsl(221, 70%, 85%);
+  --clr-secondary: #f0a384;
+  --clr-neutral-lt: #fafafa;
+  --clr-neutral-drk: #303850;
+}
+
+* {
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
-  padding: 0% 5%;
+  padding: 4rem 0;
+  background-image: linear-gradient(to right bottom, #0F4C75, #3282B8, #F55353, #F6F54D);
+  overflow-y: auto;
 }
 
 .App * {
   box-sizing: border-box;
 }
-
 body {
-  background-color: #bfd5f8;
+  background-color: #88E0EF;
 }
 
 ul {
@@ -20,6 +33,7 @@ ul {
 p {
   margin: 5px 0;
 }
+
 
 .display-none {
   display: none;
@@ -89,7 +103,23 @@ input[type="number"] {
   gap: 1rem;
   margin: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
-border-top:1px solid #eab711;
+
+}
+
+.data-vis {
+  margin: 3rem 5vw;
+  background-color: var(--clr-neutral-lt);
+  border-radius: 4px;
+  border: 0.1rem solid var(--clr-neutral-drk);
+  box-shadow: 5px 5px 10px var(--clr-neutral-drk);
+}
+.data-vis-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.recharts-surface {
+  overflow: visible;
 }
 
 @media only screen and (max-width: 768px) {
@@ -232,7 +262,26 @@ border-top:1px solid #eab711;
 
 
 
-@media only screen and (min-width: 992px) {
+@media only screen and (max-width: 450px) {
+  .data-vis {
+    margin: 3rem 0.35rem;
+  }
+  #scatter-container {
+    margin-left: -10vw;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 999px) {
+  .data-vis {
+    width: 75vw;
+    margin: 3rem auto;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .data-vis {
+    margin: 3rem 5vw;
+  }
   .data-vis-wrapper {
     flex-direction: row;
   }
@@ -240,6 +289,14 @@ border-top:1px solid #eab711;
     flex-basis: 50%;
     max-width: 50%;
     min-width: auto;
-    margin: 0 auto;
+  }
+  #scatter-container {
+    padding-right: 2vw;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .data-vis {
+    margin: 3rem 15vw;
   }
 }

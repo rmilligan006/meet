@@ -13,7 +13,8 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import WelcomeScreen from "./WelcomeScreen";
-import { InfoAlert } from "./Alert";
+import { WarningAlert } from "./Alert";
+import EventGenre from "./EventGenre";
 
 import { extractLocations, getEvents, checkToken, getAccessToken } from "./api";
 
@@ -120,21 +121,22 @@ class App extends Component {
           id="offline-alert-wrapper"
           style={infoText ? {} : { display: "none" }}
         >
-          <InfoAlert text={infoText} />
+          <WarningAlert text={infoText} />
         </div>
 
         <div className="search-wrapper">
+          <CitySearch locations={locations} updateEvents={this.updateEvents} />
           <h2>Search for developer events in your city.</h2>
           <NumberOfEvents
             numberOfEvents={numberOfEvents}
             updateNumberOfEvents={this.updateNumberOfEvents}
           />
-          <CitySearch locations={locations} updateEvents={this.updateEvents} />
         </div>
 
         <div className="data-vis">
           <h3>Events in each city</h3>
           <div className="data-vis-wrapper">
+            <EventGenre events={events} />
             <ResponsiveContainer height={400}>
               <ScatterChart
                 id="scatter-container"
@@ -160,7 +162,7 @@ class App extends Component {
                 />
                 <Scatter
                   data={this.getData().slice(0, numberOfEvents)}
-                  fill="#f0a384"
+                  fill="black"
                 />
               </ScatterChart>
             </ResponsiveContainer>
